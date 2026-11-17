@@ -1,0 +1,476 @@
+:root {
+  --color-page-bg: #EAE6DC;
+  --color-card-bg: #F8F6F0;
+  --color-card-inner: #FFFFFF;
+  --color-primary: #435436;
+  --color-primary-dark: #323F28;
+  --color-primary-light: #F0F4EC;
+  --color-olive-branch: #546845;
+  --color-text-main: #242B1F;
+  --color-text-muted: #7A8472;
+  --color-text-subtle: #98A190;
+  --color-border: #DCD6C7;
+  --color-border-subtle: #E8E4D9;
+  --color-frame: #C8C1B0;
+  --shadow-card: 0 12px 36px rgba(45, 52, 38, 0.08);
+  --shadow-btn: 0 4px 16px rgba(67, 84, 54, 0.25);
+  --radius-card: 28px;
+  --radius-inner: 20px;
+  --radius-pill: 9999px;
+  --radius-sm: 10px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--color-page-bg);
+  color: var(--color-text-main);
+  line-height: 1.5;
+  padding: 20px 12px 100px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+/* Главная карточка-меню с двойной рамкой (как в прайс-листе) */
+.menu-card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--color-card-bg);
+  border-radius: var(--radius-card);
+  padding: 28px 24px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  border: 1px solid var(--color-border);
+}
+
+.menu-inner-frame {
+  border: 1.5px solid var(--color-frame);
+  border-radius: var(--radius-inner);
+  padding: 28px 20px 24px;
+  position: relative;
+}
+
+/* Заголовок ПРАЙС */
+.brand-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.brand-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+/* Ботанический разделитель (ветвь с листьями) */
+.botanical-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px auto 6px;
+  color: var(--color-olive-branch);
+}
+
+.botanical-ornament svg {
+  width: 160px;
+  height: 28px;
+}
+
+/* Заголовки разделов (МАНИКЮР, НАРАЩИВАНИЕ) */
+.category-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin: 24px 0 14px;
+  position: relative;
+  display: inline-block;
+}
+
+.category-title::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: var(--color-olive-branch);
+  opacity: 0.6;
+  margin-top: 4px;
+}
+
+/* Список услуг в стиле ресторанного меню */
+.services-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.service-row {
+  background: transparent;
+  border: 1.5px solid transparent;
+  border-radius: 14px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.service-row:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.service-row.selected {
+  background: #FFFFFF;
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 16px rgba(67, 84, 54, 0.1);
+}
+
+.service-top-line {
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+  font-size: 15px;
+  color: var(--color-text-main);
+  font-weight: 500;
+}
+
+.service-name {
+  white-space: nowrap;
+  font-size: 15px;
+}
+
+.service-dots {
+  flex: 1;
+  border-bottom: 1.5px dotted var(--color-border);
+  margin: 0 8px;
+  height: 1px;
+  transform: translateY(-4px);
+}
+
+.service-price {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-primary);
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+
+.service-subtext {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--color-text-muted);
+  margin-top: 3px;
+  padding-left: 2px;
+}
+
+/* Разделитель между блоками внутри карточки */
+.section-divider {
+  margin: 28px 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--color-text-subtle);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+/* Календарь окошек */
+.step-subtitle {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.days-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+.days-row::-webkit-scrollbar {
+  display: none;
+}
+
+.day-item {
+  flex: 0 0 62px;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  padding: 10px 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.day-item .dow {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.day-item .num {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin: 2px 0;
+}
+
+.day-item.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(67, 84, 54, 0.25);
+}
+
+.day-item.active .dow,
+.day-item.active .num {
+  color: #FFFFFF;
+}
+
+/* Сетка времени */
+.times-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.time-slot-btn {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 11px 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+}
+
+.time-slot-btn:hover {
+  border-color: var(--color-primary);
+}
+
+.time-slot-btn.selected {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(67, 84, 54, 0.2);
+}
+
+/* Поля ввода */
+.input-group {
+  margin-bottom: 14px;
+}
+
+.input-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+}
+
+.clean-input, .clean-textarea {
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 14px;
+  color: var(--color-text-main);
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.clean-input:focus, .clean-textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(67, 84, 54, 0.1);
+}
+
+/* Загрузка фото-референса */
+.photo-uploader {
+  background: #FFFFFF;
+  border: 1.5px dashed var(--color-border);
+  border-radius: 14px;
+  padding: 18px 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.photo-uploader:hover {
+  border-color: var(--color-primary);
+  background: #FAF9F5;
+}
+
+.photo-preview-wrap {
+  margin-top: 10px;
+  position: relative;
+  display: inline-block;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.photo-preview-img {
+  max-width: 100%;
+  max-height: 180px;
+  border-radius: 10px;
+  display: block;
+}
+
+.photo-remove-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(36, 43, 31, 0.85);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Иллюстрация ветви снизу (как на фото) */
+.bottom-branch {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  color: var(--color-olive-branch);
+}
+
+.bottom-branch svg {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+}
+
+/* Плавающая нижняя панель */
+.floating-bar {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  max-width: 480px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 10px 30px rgba(45, 52, 38, 0.15);
+  z-index: 100;
+}
+
+.bar-info-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.bar-info-detail {
+  font-size: 12px;
+  color: var(--color-olive-branch);
+  font-weight: 500;
+}
+
+.chic-submit-btn {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 12px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-btn);
+  white-space: nowrap;
+}
+
+.chic-submit-btn:hover {
+  background: var(--color-primary-dark);
+}
+
+.chic-submit-btn:disabled {
+  background: #B6BDAF;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* Модальное окно */
+.chic-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(36, 43, 31, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 1000;
+}
+
+.chic-modal-card {
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 28px 22px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+  animation: popup 0.25s ease-out;
+}
+
+@keyframes popup {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}

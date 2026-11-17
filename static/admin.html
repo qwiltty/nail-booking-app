@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Управление расписанием | Кабинет мастера</title>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/static/css/style.css">
+  <style>
+    .admin-card {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+    .quick-slot-btn {
+      background: var(--color-primary-light);
+      border: 1px solid var(--color-accent);
+      color: var(--color-primary);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .quick-slot-btn:hover {
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .booking-card {
+      background: #fff;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+    .booking-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .client-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .btn-action {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+    }
+    .btn-confirm { background: #D1FAE5; color: #065F46; }
+    .btn-cancel { background: #FEE2E2; color: #991B1B; }
+    .btn-tg { background: #E0F2FE; color: #0369A1; }
+    
+    /* Lightbox для просмотра фото */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .lightbox img {
+      max-width: 95%;
+      max-height: 90vh;
+      border-radius: 12px;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: #fff;
+      font-size: 30px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header class="header-card" style="padding: 16px;">
+      <h1 class="header-title" style="font-size: 20px; margin-bottom: 4px;">Кабинет Мастера</h1>
+      <p style="font-size: 12px; color: var(--color-text-muted);">
+        Управление слотами записи со смартфона
+      </p>
+    </header>
+
+    <!-- Вкладки управления -->
+    <div class="admin-tabs">
+      <button class="tab-btn active" id="tab-slots-btn">📅 Свободные окошки</button>
+      <button class="tab-btn" id="tab-bookings-btn">📋 Заявки клиентов</button>
+    </div>
+
+    <!-- ВКЛАДКА 1: УПРАВЛЕНИЕ ОКОШКАМИ -->
+    <div id="view-slots">
+      <div class="admin-card">
+        <label class="form-label" for="admin-date-picker">Выберите дату для редактирования:</label>
+        <input type="date" id="admin-date-picker" class="form-input" style="font-size: 16px;">
+
+        <div style="margin-top: 14px;">
+          <span class="form-label" style="margin-bottom: 8px;">Быстро добавить окошко:</span>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="quick-slot-btn" onclick="quickAddSlot('10:00')">+ 10:00</button>
+            <button class="quick-slot-btn" onclick="quickAddSlot('13:30')">+ 13:30</button>
+            <button class="quick-slot-btn" onclick="quickAddSlot('17:00')">+ 17:00</button>
+            <button class="quick-slot-btn" onclick="quickAddSlot('20:00')">+ 20:00</button>
+          </div>
+        </div>
+
+        <div style="margin-top: 14px; display: flex; gap: 8px;">
+          <input type="time" id="custom-time-input" class="form-input" style="width: 120px;" value="12:00">
+          <button class="btn-primary" id="add-custom-slot-btn" style="padding: 8px 16px; font-size: 14px;">
+            Добавить
+          </button>
+        </div>
+      </div>
+
+      <div class="section-title">Окошки на выбранный день</div>
+      <div id="admin-slots-list" style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="text-align: center; color: var(--color-text-muted); font-size: 13px; padding: 20px;">
+          Загрузка окошек...
+        </div>
+      </div>
+    </div>
+
+    <!-- ВКЛАДКА 2: ЗАЯВКИ КЛИЕНТОВ -->
+    <div id="view-bookings" style="display: none;">
+      <div class="section-title">Все записи</div>
+      <div id="admin-bookings-list">
+        <div style="text-align: center; color: var(--color-text-muted); font-size: 13px; padding: 20px;">
+          Загрузка списка записей...
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Lightbox для просмотра фото референса -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close">&times;</button>
+    <img id="lightbox-img" src="" alt="Референс клиента">
+  </div>
+
+  <script src="/static/js/admin.js"></script>
+</body>
+</html>

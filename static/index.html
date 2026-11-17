@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Прайс & Онлайн-запись</title>
+  
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- Google Fonts: Playfair Display + Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Главная карточка с двойной рамкой в стиле оригинального прайса -->
+  <main class="menu-card">
+    <div class="menu-inner-frame">
+
+      <!-- Заголовок ПРАЙС -->
+      <header class="brand-header">
+        <h1 class="brand-title">ПРАЙС</h1>
+        
+        <!-- Верхний ботанический орнамент -->
+        <div class="botanical-ornament">
+          <svg viewBox="0 0 160 30" fill="currentColor">
+            <!-- Центральная точка -->
+            <circle cx="80" cy="15" r="3"/>
+            
+            <!-- Левая оливковая пара -->
+            <path d="M72 15 c-4 -7 -14 -7 -18 0 c4 7 14 7 18 0 Z" opacity="0.85"/>
+            <path d="M72 15 c-7 -4 -13 4 -18 0 c5 -4 13 -4 18 0 Z" opacity="0.45"/>
+            <line x1="20" y1="15" x2="50" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M30 15 l-6 -5 M30 15 l-6 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+
+            <!-- Правая оливковая пара -->
+            <path d="M88 15 c4 -7 14 -7 18 0 c-4 7 -14 7 -18 0 Z" opacity="0.85"/>
+            <path d="M88 15 c7 -4 13 4 18 0 c-5 -4 -13 -4 -18 0 Z" opacity="0.45"/>
+            <line x1="110" y1="15" x2="140" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M130 15 l6 -5 M130 15 l6 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </header>
+
+      <!-- РАЗДЕЛ: МАНИКЮР -->
+      <section>
+        <h2 class="category-title">МАНИКЮР</h2>
+        <div class="services-group" id="manicure-group">
+          <!-- Генерируется через JS -->
+        </div>
+      </section>
+
+      <!-- РАЗДЕЛ: НАРАЩИВАНИЕ -->
+      <section>
+        <h2 class="category-title" style="margin-top: 20px;">НАРАЩИВАНИЕ</h2>
+        <div class="services-group" id="extensions-group">
+          <!-- Генерируется через JS -->
+        </div>
+      </section>
+
+      <!-- РАЗДЕЛИТЕЛЬ -->
+      <div class="section-divider">ОНЛАЙН-ЗАПИСЬ</div>
+
+      <!-- ВЫБОР ДАТЫ И ВРЕМЕНИ -->
+      <section>
+        <div class="step-subtitle">1. Выберите дату и время:</div>
+        
+        <div class="days-row" id="days-row">
+          <!-- Дни недели -->
+        </div>
+
+        <div style="margin-top: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-muted);">
+              Свободные часы:
+            </span>
+            <span id="label-selected-date" style="font-size: 12px; color: var(--color-olive-branch); font-weight: 600;"></span>
+          </div>
+          
+          <div class="times-grid" id="times-grid">
+            <div style="grid-column: 1 / -1; text-align: center; color: var(--color-text-muted); font-size: 13px; padding: 12px;">
+              Загрузка слотов...
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- РАЗДЕЛИТЕЛЬ -->
+      <div class="section-divider">КОНТАКТЫ</div>
+
+      <!-- ФОРМА КЛИЕНТА -->
+      <section>
+        <div class="step-subtitle">2. Ваши данные:</div>
+
+        <div class="input-group">
+          <label class="input-label" for="inp-name">Ваше имя *</label>
+          <input type="text" id="inp-name" class="clean-input" placeholder="Имя" required>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label" for="inp-phone">Телефон *</label>
+          <input type="tel" id="inp-phone" class="clean-input" placeholder="+7 (999) 000-00-00" required>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label" for="inp-tg">Telegram никнейм</label>
+          <input type="text" id="inp-tg" class="clean-input" placeholder="@username">
+        </div>
+
+        <div class="input-group">
+          <label class="input-label" for="inp-comment">Комментарий к записи</label>
+          <textarea id="inp-comment" class="clean-textarea" rows="2" placeholder="Пожелания по цвету, снятие, ремонт ногтя..."></textarea>
+        </div>
+
+        <!-- Загрузка референса -->
+        <div class="input-group">
+          <label class="input-label">Фото желаемого дизайна (референс)</label>
+          <div class="photo-uploader" id="uploader-box">
+            <input type="file" id="file-photo" accept="image/*" style="display: none;">
+            
+            <div id="uploader-prompt">
+              <svg style="width: 32px; height: 32px; color: var(--color-olive-branch); margin-bottom: 6px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <div style="font-size: 13px; font-weight: 600; color: var(--color-primary);">
+                Прикрепить фото референса
+              </div>
+              <div style="font-size: 11px; color: var(--color-text-muted); margin-top: 2px;">
+                Нажмите для выбора из галереи
+              </div>
+            </div>
+
+            <div id="uploader-preview" class="photo-preview-wrap" style="display: none;">
+              <img id="preview-image-elem" class="photo-preview-img" alt="Референс">
+              <button type="button" id="btn-remove-photo" class="photo-remove-btn">✕</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Нижняя иллюстрация оливковой ветви (в точности как на карточке прайса) -->
+      <footer class="bottom-branch">
+        <svg viewBox="0 0 400 120" fill="none" stroke="currentColor">
+          <!-- Главный изогнутый стебель ветви -->
+          <path d="M30 100 Q150 40 370 70" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          
+          <!-- Оливки (темные плоды) -->
+          <ellipse cx="145" cy="85" rx="7" ry="11" transform="rotate(-15 145 85)" fill="#2C3622"/>
+          <ellipse cx="185" cy="78" rx="8" ry="12" transform="rotate(20 185 78)" fill="#2C3622"/>
+          <ellipse cx="265" cy="75" rx="8" ry="12" transform="rotate(-10 265 75)" fill="#2C3622"/>
+          
+          <!-- Черешки к оливкам -->
+          <line x1="135" y1="70" x2="145" y2="76" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="175" y1="64" x2="183" y2="68" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="255" y1="63" x2="263" y2="66" stroke="currentColor" stroke-width="1.5"/>
+
+          <!-- Листья оливы (заполненные нежным оливковым) -->
+          <!-- Лист 1 (слева внизу) -->
+          <path d="M55 95 C45 80, 75 75, 95 85 C80 98, 65 105, 55 95 Z" fill="#546845"/>
+          <!-- Лист 2 (слева вверху) -->
+          <path d="M100 80 C95 60, 115 50, 128 58 C120 72, 110 82, 100 80 Z" fill="#546845"/>
+          <!-- Лист 3 -->
+          <path d="M150 65 C145 42, 168 35, 178 48 C170 60, 160 68, 150 65 Z" fill="#546845"/>
+          <!-- Лист 4 -->
+          <path d="M210 58 C215 36, 235 38, 238 52 C230 62, 220 65, 210 58 Z" fill="#546845"/>
+          <!-- Лист 5 -->
+          <path d="M245 70 C240 88, 222 92, 215 82 C225 72, 235 68, 245 70 Z" fill="#546845"/>
+          <!-- Лист 6 -->
+          <path d="M295 64 C305 45, 322 52, 320 66 C310 72, 300 70, 295 64 Z" fill="#546845"/>
+          <!-- Лист 7 (на кончике) -->
+          <path d="M340 68 C355 58, 375 66, 372 74 C360 76, 348 74, 340 68 Z" fill="#546845"/>
+        </svg>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- Плавающая нижняя панель подтверждения (Floating Bar) -->
+  <aside class="floating-bar">
+    <div>
+      <div class="bar-info-title" id="bar-title">Выберите услугу</div>
+      <div class="bar-info-detail" id="bar-detail">и свободное время</div>
+    </div>
+    <button type="button" id="btn-submit" class="chic-submit-btn" disabled>
+      Записаться
+    </button>
+  </aside>
+
+  <!-- Модальное окно успешной записи -->
+  <div id="modal-success" class="chic-modal-overlay" style="display: none;">
+    <div class="chic-modal-card">
+      <div style="font-size: 38px; margin-bottom: 8px;">🌿</div>
+      <h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--color-primary); margin-bottom: 6px;">
+        Запись оформлена!
+      </h3>
+      <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 16px; line-height: 1.5;">
+        Мастер получил вашу заявку с референсом и свяжется с вами для подтверждения.
+      </p>
+
+      <div style="background: var(--color-primary-light); padding: 12px; border-radius: 14px; margin-bottom: 18px; text-align: left; font-size: 13px; color: var(--color-text-main);" id="modal-summary">
+        <!-- Детали записи -->
+      </div>
+
+      <button type="button" class="chic-submit-btn" id="btn-modal-close" style="width: 100%;">
+        Прекрасно
+      </button>
+    </div>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

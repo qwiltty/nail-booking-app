@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: nail-booking-app
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: BOT_TOKEN
+        sync: false
+      - key: MASTER_TELEGRAM_ID
+        sync: false
+      - key: ONE_CLIENT_PER_DAY
+        value: "false"

@@ -61,17 +61,15 @@ MASTER_TELEGRAM_ID=ваш_числовой_id
 
 ## 🌐 Бесплатный деплой в интернет (Хостинг 0 ₽)
 
-Чтобы бот и сайт работали 24/7 без включенного домашнего компьютера, проект готов для развертывания на бесплатных облачных платформах:
+Чтобы бот и сайт работали 24/7 без включенного домашнего компьютера, проект готов для автоматического развертывания на Render:
 
-### Вариант: Render.com (100% бесплатно)
-1. Зарегистрируйтесь на [render.com](https://render.com) (через GitHub или почту).
-2. Нажмите **New +** -> **Web Service**.
-3. Подключите репозиторий с проектом.
-4. Укажите:
-   - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-5. В разделе **Environment Variables** добавьте ваши `BOT_TOKEN` и `MASTER_TELEGRAM_ID`.
-6. Вы получите бесплатный адрес вида `https://nail-booking.onrender.com`.
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/qwiltty/nail-booking-app)
+
+### Как развернуть в 1 клик:
+1. Перейдите по ссылке: **[Развернуть на Render](https://render.com/deploy?repo=https://github.com/qwiltty/nail-booking-app)**
+2. Войдите через ваш GitHub-аккаунт (`qwiltty`).
+3. При необходимости укажите `BOT_TOKEN` и `MASTER_TELEGRAM_ID`.
+4. Нажмите **Apply** — через 2 минуты ваш сайт получит постоянный бесплатный адрес вида `https://nail-booking-app-xxxx.onrender.com`.
 
 ---
 

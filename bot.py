@@ -49,7 +49,17 @@ if not BOT_TOKEN:
     print("Откройте .env и укажите токен от @BotFather перед запуском.")
     print("!" * 60 + "\n")
 
-bot = Bot(token=BOT_TOKEN if BOT_TOKEN else "123456:dummy")
+# Поддержка прокси (для обхода ограничений провайдеров в РФ)
+from aiogram.client.session.aiohttp import AiohttpSession
+PROXY_URL = os.getenv("PROXY", "").strip()
+
+if PROXY_URL:
+    print(f"🌐 Используется прокси: {PROXY_URL}")
+    session = AiohttpSession(proxy=PROXY_URL)
+    bot = Bot(token=BOT_TOKEN if BOT_TOKEN else "123456:dummy", session=session)
+else:
+    bot = Bot(token=BOT_TOKEN if BOT_TOKEN else "123456:dummy")
+
 dp = Dispatcher(storage=MemoryStorage())
 
 # FSM состояния для записи клиента
